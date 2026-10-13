@@ -13,3 +13,6 @@ node_modules/
 backend/node_modules/
 *.jks
 *.keystore
+
+# Firebase Android configuration
+app/google-services.json

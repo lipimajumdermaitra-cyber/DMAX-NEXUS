@@ -19,6 +19,18 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v6
 
+      - name: Configure Firebase
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
+            printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
+            python -m json.tool app/google-services.json > /dev/null
+            echo "Firebase configuration created and validated."
+          else
+            echo "Firebase secret unavailable; building without Firebase configuration."
+          fi
+
       - name: Validate AI backend JavaScript syntax
         run: node --check backend/server.js
 
