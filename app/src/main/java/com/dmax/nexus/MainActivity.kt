@@ -147,7 +147,10 @@ private fun NexusApplication() {
                         endpointConfigured = InputRules.isSafeHttpsEndpoint(settings.aiEndpoint),
                         initialPrompt = pendingPrompt,
                         promptKey = promptVersion,
-                        onSend = sendAiMessage
+                        onSend = sendAiMessage,
+                        onClearChat = {
+                            scope.launch { repository.clearChat() }
+                        }
                     )
                     2 -> WorkspaceScreen(
                         initialSection = hubSection,
